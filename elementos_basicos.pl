@@ -1,12 +1,10 @@
-/*Digite o Programa incluindo as regras que definem as relações avô e realize as seguintes consultas: a)quem são os filhos de adão?
-b)quem são os netos de adão? c)quem são os tios de Enos?*/
-pai(adão,cain).
+/*Digite o Programa incluindo as regras que definem as relações avô e realize as seguintes consultas: a)quem são os filhos de adão?b)quem são os netos de adão? c)quem são os tios de Enos?*/
+/*pai(adão,cain).
 pai(adão,abel).
 pai(adão,seth).
 pai(seth,enos).
-
 avô(X,Y) :- pai(X,Z), pai(Z,Y).
-irmão(X,Y) :- pai(Z,X), pai(Z,Y), X\=Y.
+irmão(X,Y) :- pai(Z,X), pai(Z,Y), X\=Y.*/
 /*a)pai(adão,Y).
     Y = cain ;
     Y = abel ;
@@ -60,3 +58,20 @@ homem(ary).
 %c)
 gerou(X,Y) :- pai(X,Y); mãe(X,Y).
 %d)
+irmão(X,Y) :- pai(Z,X), pai(Z,Y), X\=Y, homem(X);mãe(Z,X), mãe(Z,Y), X\=Y, homem(X).
+irmã(X,Y) :- pai(Z,X), pai(Z,Y), X\=Y, mulher(X);mãe(Z,X), mãe(Z,Y), X\=Y,mulher(X).
+filho(X,Y) :- gerou(Y,X), homem(X).
+filha(X,Y) :- gerou(Y,X), mulher(X).
+tio(X,Y):- pai(Z,Y),irmão(Z,X), homem(X);mãe(Z,Y),irmão(Z,X),homem(X).
+tia(X,Y):- mãe(Z,Y),irmão(Z,X), mulher(X);pai(Z,Y),irmão(Z,X),mulher(X).
+primo(X,Y) :- pai(Z,Y),tio(Z,X),homem(X);mãe(Z,Y),tia(Z,X),homem(X).
+prima(X,Y) :- pai(Z,Y),tio(Z,X),mulher(X);mãe(Z,Y),tia(Z,X),mulher(X).
+avô(X,Y) :- pai(X,Z), gerou(Z,Y), homem(X).
+avó(X,Y) :- mãe(X,Z), gerou(Z,Y), mulher(X).
+/*Codifique as regras equivalentes às seguintes sentenças:
+a) Todo mundo que tem filhos é feliz.
+b) Um casal é formado por duas pessoas que têm filhos em comum.*/
+%a)
+feliz(X):-gerou(X,_).
+%b)
+casal(X,Y):-pai(X,Z),mãe(Y,Z).
